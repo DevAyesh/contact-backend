@@ -1,0 +1,29 @@
+{
+  "name": "contacts-backend-api",
+  "version": "1.0.0",
+  "description": "Express project with backend api",
+  "homepage": "https://github.com/DevAyesh/contact-backend#readme",
+  "bugs": {
+    "url": "https://github.com/DevAyesh/contact-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevAyesh/contact-backend.git"
+  },
+  "license": "MIT",
+  "author": "\"Ayesh\"",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
