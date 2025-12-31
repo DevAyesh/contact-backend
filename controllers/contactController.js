@@ -1,9 +1,11 @@
-const asyncHandler = require("express-async-handler");  
+const asyncHandler = require("express-async-handler"); 
+const Contact = require("../models/contactModel.js"); 
 //@desc Get all contacts
 //@route GET /api/contacts
 //access Public
 const getContacts = asyncHandler(async (req, res) => {
-  res.status(200).json({message: "Get all contacts"});
+  const contacts =  await Contact.find();
+  res.status(200).json(contacts);
 });
 
 
@@ -17,7 +19,13 @@ const createContacts = asyncHandler(async (req, res, next) => {
       res.status(400);
       throw new Error("All fields are mandatory!");
     }
-    res.status(201).json({ message: "Create a new contact" });
+
+    const contact = await Contact.create({
+      name,
+      email,
+      phone,
+    }); 
+    res.status(201).json(contact);
   
   
 });
@@ -26,21 +34,45 @@ const createContacts = asyncHandler(async (req, res, next) => {
 //@route POST /api/contacts/:id
 //access Public
 const getContact = asyncHandler(async (req, res) => {
-  res.status(200).json({message: `Get contact for ${req.params.id}`});
+  const contact = await Contact.findById(req.params.id);
+  if (!contact) {
+    res.status(404);
+    throw new Error("Contact not found");
+  }
+  res.status(200).json(contact);
 });
 
 //@desc Update contacts
 //@route PUT /api/contacts/:id
 //access Public
 const updateContact = asyncHandler(async (req, res) =>{
-  res.status(200).json({message: `Update contact for ${req.params.id}`});
+  const contact = await Contact.findById(req.params.id);
+  if (!contact) {
+    res.status(404);
+    throw new Error("Contact not found");
+  }
+
+  const updatedContact = await Contact.findByIdAndUpdate(
+    req.params.id,
+    req.body,  
+    { new: true }
+  );
+
+  res.status(200).json(updatedContact);
 });
 
 //@desc Delete contacts
 //@route DELETE /api/contacts/:id
 //access Public
 const deleteContact = asyncHandler(async (req, res) => {
-  res.status(200).json({message: `Delete contact for ${req.params.id}`});
+    const contact = await Contact.findByIdAndDelete(req.params.id);
+  if (!contact) {
+    res.status(404);
+    throw new Error("Contact not found");
+  }
+
+
+  res.status(200).json(contact);
 });
 
 
