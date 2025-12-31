@@ -31,7 +31,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     console.log(`User created ${user}`);
     if (user) {
-        res.status(201).json({ _id: user.id, email: user.email });
+        res.status(201).json({ _id: user._id, email: user.email });
     } else {
         res.status(400);
         throw new Error("User data is not valid");
@@ -58,10 +58,10 @@ const loginUser = asyncHandler(async (req, res) => {
                 user: {
                     username: user.username,
                     email: user.email,
-                    id: user.id,
+                    id: user._id,
                 },
             }, process.env.JWT_SECRET,
-            { expiresIn: "1m" });
+            { expiresIn: "5m" });
         res.status(200).json({ accessToken });
     }else {
         res.status(401);
@@ -73,7 +73,7 @@ const loginUser = asyncHandler(async (req, res) => {
 //@route GET /api/users/current
 //access Private
 const currentUser = asyncHandler(async (req, res) => {
-    res.json({ message: "Current user information" });
+    res.status(200).json({ message: "Current user information" });
 });
 
 module.exports = { registerUser, loginUser, currentUser };
