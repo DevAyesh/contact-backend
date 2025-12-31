@@ -3,41 +3,44 @@ const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode ? res.statusCode : 500;
   switch (statusCode) {
     case constants.VALIDATION_ERROR:
-      res.jason({ 
+      res.status(statusCode).json({ 
         title: "Validation failed" ,
         message: err.message, 
         stackTrace: err.stack  
-        });
-        break;
+      });
+      break;
     case constants.NOT_FOUND:
-        res.jason({ 
-            title: "Not Found" , 
-            message: err.message, 
-            stackTrace: err.stack  
-        });
+      res.status(statusCode).json({ 
+        title: "Not Found" , 
+        message: err.message, 
+        stackTrace: err.stack  
+      });
+      break;
     case constants.UNAUTHORIZED:
-        res.jason({ 
-            title: "Unauthorized" , 
-            message: err.message, 
-            stackTrace: err.stack  
-        });
+      res.status(statusCode).json({ 
+        title: "Unauthorized" , 
+        message: err.message, 
+        stackTrace: err.stack  
+      });
+      break;
     case constants.FORBIDDEN:
-        res.jason({ 
-            title: "Forbidden" , 
-            message: err.message, 
-            stackTrace: err.stack  
-        });
+      res.status(statusCode).json({ 
+        title: "Forbidden" , 
+        message: err.message, 
+        stackTrace: err.stack  
+      });
+      break;
     case constants.SERVER_ERROR:
-        res.jason({ 
-            title: "Server Error" , 
-            message: err.message, 
-            stackTrace: err.stack  
-        });    
+      res.status(statusCode).json({ 
+        title: "Server Error" , 
+        message: err.message, 
+        stackTrace: err.stack  
+      });
+      break;    
     default:
-        console.log("No error, all good!");
-        break;
+      console.log("No error, all good!");
+      break;
   }
-  
 };
 
 module.exports = errorHandler;
